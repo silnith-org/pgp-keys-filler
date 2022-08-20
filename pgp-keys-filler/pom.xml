@@ -6,6 +6,5 @@
     <artifactId>pgp-keys-filler</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>PGP Keys Filler</name>
-    <description>Additional configuration for PGP keys to fill in missing key
-        map entries.</description>
+    <description>Additional configuration for PGP keys to fill in missing key map entries.</description>
 </project>
