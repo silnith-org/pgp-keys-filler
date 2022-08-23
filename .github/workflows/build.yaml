@@ -1,0 +1,47 @@
+name: Maven Build
+
+on:
+  workflow_call:
+
+env: {}
+
+jobs:
+  build:
+    name: Build
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+          - macos-latest
+          - ubuntu-latest
+        distribution:
+          - temurin
+        java-version:
+          - 8
+          - 17
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: ${{ matrix.distribution }}
+          java-version: ${{ matrix.java-version }}
+          cache: maven
+      - name: Download Packages Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: packages
+          path: packages/
+      - name: Build
+        run: mvn clean
+      - name: Build
+        run: mvn verify
+      - name: Build
+        run: mvn site
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.distribution }}-${{ matrix.java-version }}
+          path: target/
