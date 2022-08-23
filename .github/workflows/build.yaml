@@ -29,11 +29,6 @@ jobs:
           distribution: ${{ matrix.distribution }}
           java-version: ${{ matrix.java-version }}
           cache: maven
-      - name: Download Packages Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: packages
-          path: packages/
       - name: Build
         run: mvn clean
       - name: Build
