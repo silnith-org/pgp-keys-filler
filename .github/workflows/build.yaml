@@ -39,8 +39,8 @@ jobs:
         with:
           toolchains: |
             [
-              {"jdkVersion": "1.8", "jdkHome": "${{ steps.setup-java-8.outputs.path }}"},
-              {"jdkVersion": "1.17", "jdkHome": "${{ steps.setup-java-17.outputs.path }}"}
+              {"jdkVersion": "8", "jdkHome": "${{ steps.setup-java-8.outputs.path }}"},
+              {"jdkVersion": "17", "jdkHome": "${{ steps.setup-java-17.outputs.path }}"}
             ]
       - name: Build
         run: mvn clean
