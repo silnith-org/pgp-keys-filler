@@ -33,7 +33,7 @@ jobs:
           distribution: ${{ matrix.distribution }}
           java-version: 17
           cache: maven
-      - name: Something
+      - name: Configure Maven Toolchains
         uses: cactuslab/maven-toolchains-xml-action@v1
         with:
           toolchains: |
