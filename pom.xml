@@ -55,8 +55,16 @@
         <notifiers />
     </ciManagement>
     <distributionManagement>
-        <repository />
-        <snapshotRepository />
+        <repository>
+        	<id>github</id>
+        	<name>GitHub Packages</name>
+        	<url>https://maven.pkg.github.com/silnith-org/pgp-keys-filler</url>
+        </repository>
+        <snapshotRepository>
+        	<id>github</id>
+        	<name>GitHub Packages</name>
+        	<url>https://maven.pkg.github.com/silnith-org/pgp-keys-filler</url>
+        </snapshotRepository>
         <site />
         <downloadUrl />
     </distributionManagement>
