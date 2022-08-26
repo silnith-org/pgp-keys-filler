@@ -16,19 +16,32 @@ jobs:
           - ubuntu-latest
         distribution:
           - temurin
-        java-version:
-          - 8
-          - 17
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup Java
+      - id: setup-java-8
+        name: Setup Java 8
         uses: actions/setup-java@v3
         with:
           distribution: ${{ matrix.distribution }}
-          java-version: ${{ matrix.java-version }}
+          java-version: 8
           cache: maven
+      - id: setup-java-17
+        name: Setup Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: ${{ matrix.distribution }}
+          java-version: 17
+          cache: maven
+      - name: Something
+        uses: cactuslab/maven-toolchains-xml-action@v1
+        with:
+          toolchains: |
+            [
+              {"jdkVersion": "8", "jdkHome": "${{ steps.setup-java-8.outputs.path }}"},
+              {"jdkVersion": "17", "jdkHome": "${{ steps.setup-java-17.outputs.path }}"}
+            ]
       - name: Build
         run: mvn clean
       - name: Build
@@ -38,5 +51,5 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.distribution }}-${{ matrix.java-version }}
+          name: ${{ matrix.distribution }}-${{ matrix.os }}
           path: target/
