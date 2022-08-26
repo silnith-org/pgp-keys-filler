@@ -73,7 +73,7 @@
         <maven.source.skip>false</maven.source.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <silnith.toolchain.jdk.version>[9,)</silnith.toolchain.jdk.version>
+        <silnith.toolchain.jdk.version>[1.9,2.0)</silnith.toolchain.jdk.version>
     </properties>
     <dependencyManagement />
     <dependencies />
