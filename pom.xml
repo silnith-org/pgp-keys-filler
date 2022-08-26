@@ -50,8 +50,8 @@
         <url>https://github.com/silnith-org/pgp-keys-filler/issues</url>
     </issueManagement>
     <ciManagement>
-        <system />
-        <url />
+        <system>GitHub Actions</system>
+        <url>https://github.com/silnith-org/pgp-keys-filler/actions</url>
         <notifiers />
     </ciManagement>
     <distributionManagement>
@@ -247,7 +247,7 @@
                 <plugin>
                     <groupId>org.owasp</groupId>
                     <artifactId>dependency-check-maven</artifactId>
-                    <version>7.1.1</version>
+                    <version>7.1.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
