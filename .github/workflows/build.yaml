@@ -41,11 +41,11 @@ jobs:
               {"jdkVersion": "1.8", "jdkHome": "${{ steps.setup-java-8.outputs.path }}"},
               {"jdkVersion": "1.17", "jdkHome": "${{ steps.setup-java-17.outputs.path }}"}
             ]
-      - name: Build
+      - name: Clean
         run: mvn clean
-      - name: Build
+      - name: Verify
         run: mvn verify
-      - name: Build
+      - name: Site
         run: mvn site
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
