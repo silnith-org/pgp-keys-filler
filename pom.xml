@@ -71,7 +71,7 @@
     <properties>
         <argLine />
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler.release>8</maven.compiler.release>
+        <maven.compiler.release>11</maven.compiler.release>
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
         <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
         <maven.compiler.verbose>false</maven.compiler.verbose>
