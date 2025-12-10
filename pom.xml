@@ -71,7 +71,7 @@
     <properties>
         <argLine />
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.release>8</maven.compiler.release>
         <maven.compiler.showDeprecation>true</maven.compiler.showDeprecation>
         <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
         <maven.compiler.verbose>false</maven.compiler.verbose>
@@ -81,7 +81,7 @@
         <maven.source.skip>false</maven.source.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <silnith.toolchain.jdk.version>[1.11,2.0)</silnith.toolchain.jdk.version>
+        <silnith.toolchain.jdk.version>[1.9,2.0)</silnith.toolchain.jdk.version>
     </properties>
     <dependencyManagement />
     <dependencies />
@@ -245,11 +245,6 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.14</version>
                 </plugin>
-                <plugin>
-                    <groupId>org.owasp</groupId>
-                    <artifactId>dependency-check-maven</artifactId>
-                    <version>12.1.9</version>
-                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -266,7 +261,7 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <version>3.6.3</version>
+                                    <version>3.3.1</version>
                                 </requireMavenVersion>
                                 <requirePluginVersions />
                                 <requireUpperBoundDeps />
@@ -410,18 +405,6 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>aggregate</report>
-                            <report>check</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
             </plugin>
         </plugins>
     </reporting>
