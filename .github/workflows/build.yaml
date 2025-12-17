@@ -48,6 +48,9 @@ jobs:
       - name: View Settings
         continue-on-error: true
         run: mvn help:effective-settings
+      - name: View POM
+        continue-on-error: true
+        run: mvn help:effective-pom
       - name: Clean
         run: mvn clean
       - name: Verify
