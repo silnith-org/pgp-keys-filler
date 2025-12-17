@@ -45,6 +45,9 @@ jobs:
               {"jdkVersion": "1.17", "jdkHome": "${{ steps.setup-java-17.outputs.path }}"},
               {"jdkVersion": "1.21", "jdkHome": "${{ steps.setup-java-21.outputs.path }}"}
             ]
+      - name: View Settings
+        continue-on-error: true
+        run: mvn help:effective-settings
       - name: Clean
         run: mvn clean
       - name: Verify
