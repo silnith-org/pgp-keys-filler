@@ -33,7 +33,7 @@
             <roles>
                 <role>developer</role>
             </roles>
-            <timezone>America/Los_Angeles</timezone>
+            <timezone>America/Chicago</timezone>
             <properties />
         </developer>
     </developers>
