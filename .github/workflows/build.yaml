@@ -15,42 +15,100 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+      # Each Java version is installed separately because we need distinct step outputs
+      # for each version in order to build the toolchains file later.
       - id: setup-java-8
         name: Setup Java 8
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 8
-          cache: maven
       - id: setup-java-17
         name: Setup Java 17
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
-          cache: maven
       - id: setup-java-21
         name: Setup Java 21
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
-          cache: maven
+      - id: setup-java-25
+        name: Setup Java 25
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 25
+      # The setup-java action builds a settings file, but we want a better one
+      # that includes GitHub repositories across all projects for the owner.
+      - id: create-settings-file
+        name: Create Maven Settings
+        uses: s4u/maven-settings-action@v4.0.0
+        with:
+          githubServer: true
+          servers: |
+            [
+              {
+                "id": "github-${{ github.repository_owner }}",
+                "username": "${{ github.actor }}",
+                "password": "${{ github.token }}"
+              }
+            ]
+          repositories: |
+            [
+              {
+                "id": "github-${{ github.repository_owner }}",
+                "name": "GitHub ${{ github.repository_owner }}",
+                "url": "https://maven.pkg.github.com/${{ github.repository_owner }}/packages"
+              }
+            ]
+          pluginRepositories: |
+            [
+              {
+                "id": "github-${{ github.repository_owner }}",
+                "name": "GitHub ${{ github.repository_owner }}",
+                "url": "https://maven.pkg.github.com/${{ github.repository_owner }}/packages"
+              }
+            ]
+      # The setup-java action populates the toolchains file, but it only uses the
+      # new "marketing" verison numbers.
       - name: Configure Maven Toolchains
         uses: cactuslab/maven-toolchains-xml-action@v2
         with:
           toolchains: |
             [
               {"jdkVersion": "1.8", "jdkHome": "${{ steps.setup-java-8.outputs.path }}"},
+              {"jdkVersion": "8", "jdkHome": "${{ steps.setup-java-8.outputs.path }}"},
               {"jdkVersion": "1.17", "jdkHome": "${{ steps.setup-java-17.outputs.path }}"},
-              {"jdkVersion": "1.21", "jdkHome": "${{ steps.setup-java-21.outputs.path }}"}
+              {"jdkVersion": "17", "jdkHome": "${{ steps.setup-java-17.outputs.path }}"},
+              {"jdkVersion": "1.21", "jdkHome": "${{ steps.setup-java-21.outputs.path }}"},
+              {"jdkVersion": "21", "jdkHome": "${{ steps.setup-java-21.outputs.path }}"},
+              {"jdkVersion": "1.25", "jdkHome": "${{ steps.setup-java-25.outputs.path }}"},
+              {"jdkVersion": "25", "jdkHome": "${{ steps.setup-java-25.outputs.path }}"}
             ]
-      - name: View Settings
+      # Store the entire local Maven repository as a GitHub cache.
+      # This is stupid, but GitHub does not offer a non-stupid alternative.
+      - name: Cache Maven Dependencies
+        uses: actions/cache@v5
+        with:
+          key: 'maven-${{ github.repository_owner }}-${{ hashFiles(''**/pom.xml'') }}'
+          restore-keys: |
+            maven-${{ github.repository_owner }}-
+            maven-
+          fail-on-cache-miss: false
+          path: |
+            ~/.m2/repository
+      - name: Resolve Dependencies
         continue-on-error: true
-        run: mvn help:effective-settings
-      - name: View POM
-        continue-on-error: true
-        run: mvn help:effective-pom
+        run: mvn dependency:go-offline --no-transfer-progress
+#      - name: View Settings
+#        continue-on-error: true
+#        run: mvn help:effective-settings --no-transfer-progress
+#      - name: View POM
+#        continue-on-error: true
+#        run: mvn help:effective-pom --no-transfer-progress
       - name: Clean
         run: mvn clean
       - name: Verify
@@ -64,5 +122,3 @@ jobs:
           path: target/
       - name: Publish Package
         run: mvn deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
