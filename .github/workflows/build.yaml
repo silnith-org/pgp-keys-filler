@@ -122,3 +122,5 @@ jobs:
           path: target/
       - name: Publish Package
         run: mvn deploy
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
