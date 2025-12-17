@@ -10,5 +10,5 @@ env: {}
 jobs:
   call-build:
     name: Standard Build
-    uses: ./.github/workflows/build.yaml
+    uses: silnith-org/parent-pom/.github/workflows/build.yaml
     secrets: inherit
